@@ -23,13 +23,15 @@ namespace CippSharpEditor
             
             if (aFixedTransform is FixedTransformOnDemand)
             {
-                if (GUILayout.Button("Setup", EditorStyles.miniButton))
-                {
-                    ((FixedTransformOnDemand)aFixedTransform).Setup(true);
-                }
+                EditorGUILayoutUtilities.DrawMiniButton("Setup", SetupCallback);
             }
             
             GUILayout.Space(5);
+        }
+
+        private void SetupCallback()
+        {
+            ((FixedTransformOnDemand)aFixedTransform).Setup(true);
         }
     }
 }
