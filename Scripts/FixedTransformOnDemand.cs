@@ -77,9 +77,7 @@ namespace CippSharp
 					{
 						child.localScale += deltaLocalScale;
 					}
-#if UNITY_EDITOR
-					EditorUtility.SetDirty(child);
-#endif
+
 					if (affectNestedFixedTransformOnDemandComponents)
 					{
 						FixedTransformOnDemand fixedTransformOnDemand = child.GetComponent<FixedTransformOnDemand>();
@@ -88,10 +86,35 @@ namespace CippSharp
 							fixedTransformOnDemand.Setup(affectNestedFixedTransformOnDemandComponents);
 						}
 					}
+#if UNITY_EDITOR
+					EditorUtility.SetDirty(child);
+#endif
 				}
 #if UNITY_EDITOR
 				EditorRepaint = true;
 #endif
+			}
+			else
+			{
+				if (affectNestedFixedTransformOnDemandComponents)
+				{
+					for (int i = 0; i < target.childCount; i++)
+					{
+						Transform child = target.GetChild(i);
+
+						FixedTransformOnDemand fixedTransformOnDemand = child.GetComponent<FixedTransformOnDemand>();
+						if (fixedTransformOnDemand != null)
+						{
+							fixedTransformOnDemand.Setup(affectNestedFixedTransformOnDemandComponents);
+						}
+#if UNITY_EDITOR
+						EditorUtility.SetDirty(child);
+#endif
+					}
+#if UNITY_EDITOR
+					EditorRepaint = true;
+#endif
+				}
 			}
 		}
 	}
