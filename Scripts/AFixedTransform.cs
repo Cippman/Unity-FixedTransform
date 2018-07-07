@@ -36,11 +36,18 @@ namespace CippSharp
         /// </summary>
         [SerializeField] public ShowableTransform[] children = new ShowableTransform[0];
 
+
+        private bool editorRepaint = true;
+        
         /// <summary>
         /// Tells to editor class if need a refresh.
         /// Optimization purpose only.
         /// </summary>
-        public virtual bool EditorRepaint { get; set; }
+        public virtual bool EditorRepaint
+        {
+            get { return editorRepaint;}
+            set { editorRepaint = value; }
+        }
 #endif
-    }
+        }
 }
