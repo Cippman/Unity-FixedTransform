@@ -32,14 +32,9 @@ namespace CippSharp
         }
         
         /// <summary>
-        /// Fold in inspector showed children.
-        /// </summary>
-        public bool showChildren;
-
-        /// <summary>
         /// Holds children transform most common data
         /// </summary>
-        [SerializeField] public ShowableTransform[] showableChildren = new ShowableTransform[0];
+        [SerializeField] public ShowableTransform[] children = new ShowableTransform[0];
 
         /// <summary>
         /// Tells to editor class if need a refresh.

@@ -21,7 +21,7 @@ namespace CippSharpEditor
             aFixedTransform = ((AFixedTransform) target);
             localIdentfierInFile = EditorGUILayoutUtilities.GetLocalIdentfierInFile(aFixedTransform);
             transform = aFixedTransform.transform;
-            ser_showableChildren = serializedObject.FindProperty("showableChildren");
+            ser_showableChildren = serializedObject.FindProperty("children");
         }
 
         public override void OnInspectorGUI()
@@ -46,15 +46,15 @@ namespace CippSharpEditor
             {
                 aFixedTransform.EditorRepaint = false;
                 int childCount = transform.childCount;
-                if (aFixedTransform.showableChildren.Length != childCount)
+                if (aFixedTransform.children.Length != childCount)
                 {
-                    aFixedTransform.showableChildren = new AFixedTransform.ShowableTransform[childCount];
+                    aFixedTransform.children = new AFixedTransform.ShowableTransform[childCount];
                 }
 
                 for (int i = 0; i < childCount; i++)
                 {
                     Transform child = transform.GetChild(i);
-                    aFixedTransform.showableChildren[i] = new AFixedTransform.ShowableTransform(child);
+                    aFixedTransform.children[i] = new AFixedTransform.ShowableTransform(child);
                 }
             }
             
