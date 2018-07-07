@@ -1,7 +1,12 @@
 ﻿/*
  *  Author: Alessandro Salani (Cippman)
  */
+
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace CippSharp
 {
@@ -59,18 +64,21 @@ namespace CippSharp
 					Transform child = target.GetChild(i);
 					if (positionIsDirty)
 					{
-						child.localPosition = deltaLocalPosition;
+						child.localPosition += deltaLocalPosition;
 					}
 
 					if (rotationIsDirty)
 					{
-						child.localEulerAngles = deltaLocalEulerAngles;
+						child.localEulerAngles += deltaLocalEulerAngles;
 					}
 
 					if (scaleIsDirty)
 					{
-						child.localScale = deltaLocalScale;
+						child.localScale += deltaLocalScale;
 					}
+#if UNITY_EDITOR
+					EditorUtility.SetDirty(child);
+#endif
 				}
 #if UNITY_EDITOR
 				EditorRepaint = true;

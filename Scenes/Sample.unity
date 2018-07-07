@@ -345,7 +345,7 @@ GameObject:
   - component: {fileID: 1051447234}
   - component: {fileID: 1051447235}
   m_Layer: 0
-  m_Name: C (1)
+  m_Name: Child
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -376,7 +376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd2a7b3fdc642a448d14845de4dca0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showChildrenLocalPositionInfo: 1
 --- !u!1 &1236258217
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d570082972749448722bb17bb50761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showChildrenLocalPositionInfo: 0
 --- !u!1 &1552801170
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,4 +575,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d570082972749448722bb17bb50761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showChildrenLocalPositionInfo: 0
