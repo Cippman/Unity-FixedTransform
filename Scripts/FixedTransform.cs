@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿/*
+ *  Author: Alessandro Salani (Cippman)
+ */
+using UnityEngine;
 
 namespace CippSharp
 {
@@ -29,7 +32,7 @@ namespace CippSharp
 		}
 		
 		/// <summary>
-		/// 
+		/// Every frame checks and move children if target's position was changed.
 		/// </summary>
 		private void Update()
 		{

@@ -1,4 +1,6 @@
-﻿
+﻿/*
+ *  Author: Alessandro Salani (Cippman)
+ */
 using CippSharp;
 using UnityEditor;
 using UnityEngine;
@@ -10,11 +12,11 @@ namespace CippSharpEditor
     {
         public override void OnInspectorGUI()
         {
-            if (target is FixedTransformOnDemand)
+            if (aFixedTransform is FixedTransformOnDemand)
             {
                 if (GUILayout.Button("Setup", EditorStyles.miniButton))
                 {
-                    ((FixedTransformOnDemand)target).Setup(true);
+                    ((FixedTransformOnDemand)aFixedTransform).Setup(true);
                 }
                 
                 GUILayout.Space(5);

@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿/*
+ *  Author: Alessandro Salani (Cippman)
+ */
+using UnityEngine;
 
 namespace CippSharp
 {
