@@ -8,7 +8,7 @@ using UnityEngine;
 namespace CippSharpEditor
 {
     [CustomEditor(typeof(FixedTransformOnDemand))]
-    public class FixedTransformOnDemandEditor : FixedTransformEditor
+    public class FixedTransformOnDemandEditor : AFixedTransformEditor
     {
         public override void OnInspectorGUI()
         {

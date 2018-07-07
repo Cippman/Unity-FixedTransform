@@ -8,17 +8,20 @@ using CippSharp;
 namespace CippSharpEditor
 {
     [CustomEditor(typeof(AFixedTransform), true)]
-    public class FixedTransformEditor : Editor
+    public class AFixedTransformEditor : Editor
     {
         protected int localIdentfierInFile;
         protected AFixedTransform aFixedTransform;
         protected Transform transform;
+        
+        private SerializedProperty ser_showableChildren;
         
         protected virtual void OnEnable()
         {
             aFixedTransform = ((AFixedTransform) target);
             localIdentfierInFile = EditorGUILayoutUtilities.GetLocalIdentfierInFile(aFixedTransform);
             transform = aFixedTransform.transform;
+            ser_showableChildren = serializedObject.FindProperty("showableChildren");
         }
 
         public override void OnInspectorGUI()
@@ -38,16 +41,27 @@ namespace CippSharpEditor
             EditorGUILayoutUtilities.DrawHeader("Infos:");
             bool guiEnabled = GUI.enabled;
             GUI.enabled = false;
-            aFixedTransform.showChildrenLocalPositionInfo = EditorGUILayout.Foldout(aFixedTransform.showChildrenLocalPositionInfo, "Children");
-            if (aFixedTransform.showChildrenLocalPositionInfo)
+            
+            if (aFixedTransform.EditorRepaint)
             {
-                for (int i = 0; i < transform.childCount; i++)
+                aFixedTransform.EditorRepaint = false;
+                int childCount = transform.childCount;
+                if (aFixedTransform.showableChildren.Length != childCount)
+                {
+                    aFixedTransform.showableChildren = new AFixedTransform.ShowableTransform[childCount];
+                }
+
+                for (int i = 0; i < childCount; i++)
                 {
                     Transform child = transform.GetChild(i);
-                    EditorGUILayout.Vector3Field(child.name, child.localPosition);
+                    aFixedTransform.showableChildren[i] = new AFixedTransform.ShowableTransform(child);
                 }
             }
+            
+            EditorGUILayout.PropertyField(ser_showableChildren, true);
+
             GUI.enabled = guiEnabled;
+
             serializedObject.ApplyModifiedProperties();
         }
     }
