@@ -30,7 +30,7 @@ namespace CippSharp
                 scale = target.localScale;
             }
         }
-        
+
         /// <summary>
         /// Holds children transform most common data
         /// </summary>
@@ -38,16 +38,16 @@ namespace CippSharp
 
 
         private bool editorRepaint = true;
-        
+
         /// <summary>
         /// Tells to editor class if need a refresh.
         /// Optimization purpose only.
         /// </summary>
         public virtual bool EditorRepaint
         {
-            get { return editorRepaint;}
+            get { return editorRepaint; }
             set { editorRepaint = value; }
         }
 #endif
-        }
+    }
 }
