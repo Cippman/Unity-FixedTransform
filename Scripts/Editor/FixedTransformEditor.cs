@@ -10,17 +10,32 @@ namespace CippSharpEditor
     [CustomEditor(typeof(AFixedTransform), true)]
     public class FixedTransformEditor : Editor
     {
+        protected int localIdentfierInFile;
         protected AFixedTransform aFixedTransform;
         protected Transform transform;
         
         protected virtual void OnEnable()
         {
             aFixedTransform = ((AFixedTransform) target);
+            localIdentfierInFile = EditorGUILayoutUtilities.GetLocalIdentfierInFile(aFixedTransform);
             transform = aFixedTransform.transform;
         }
 
         public override void OnInspectorGUI()
         {
+            DrawAFixedTransformData();
+            DrawAFixedTransformInspector();
+        }
+
+        protected void DrawAFixedTransformData()
+        {
+            EditorGUILayoutUtilities.DrawObjectData(serializedObject, localIdentfierInFile);
+        }
+
+        protected void DrawAFixedTransformInspector()
+        {
+            serializedObject.Update();
+            EditorGUILayoutUtilities.DrawHeader("Infos:");
             bool guiEnabled = GUI.enabled;
             GUI.enabled = false;
             aFixedTransform.showChildrenLocalPositionInfo = EditorGUILayout.Foldout(aFixedTransform.showChildrenLocalPositionInfo, "Children");
@@ -33,6 +48,7 @@ namespace CippSharpEditor
                 }
             }
             GUI.enabled = guiEnabled;
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }

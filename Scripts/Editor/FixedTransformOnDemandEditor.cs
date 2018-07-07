@@ -12,17 +12,24 @@ namespace CippSharpEditor
     {
         public override void OnInspectorGUI()
         {
+            DrawAFixedTransformData();
+            DrawFixedTransformOnDemandInspector();
+            DrawAFixedTransformInspector();
+        }
+
+        protected void DrawFixedTransformOnDemandInspector()
+        {
+            EditorGUILayoutUtilities.DrawHeader("Commands:");
+            
             if (aFixedTransform is FixedTransformOnDemand)
             {
                 if (GUILayout.Button("Setup", EditorStyles.miniButton))
                 {
                     ((FixedTransformOnDemand)aFixedTransform).Setup(true);
                 }
-                
-                GUILayout.Space(5);
             }
             
-            base.OnInspectorGUI();           
+            GUILayout.Space(5);
         }
     }
 }
