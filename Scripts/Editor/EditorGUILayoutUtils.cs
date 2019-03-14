@@ -63,24 +63,7 @@ namespace CippSharpEditor
             EditorGUILayout.LabelField(content, EditorStyles.boldLabel);
             GUILayout.Space(2);
         }
-
-        /// <summary>
-        /// Draws a button.
-        /// </summary>
-        /// <param name="content"></param>
-        /// <param name="style"></param>
-        /// <param name="action"></param>
-        public static void DrawButton(string content, GUIStyle style, UnityAction action)
-        {
-            if (GUILayout.Button(content, style))
-            {
-                if (action != null)
-                {
-                    action();
-                }
-            }
-        }
-
+        
         /// <summary>
         /// Draws a mini button
         /// </summary>
@@ -96,19 +79,5 @@ namespace CippSharpEditor
                 }
             }
         }
-
-
-        /// <summary>
-        /// Draw a property with disabled GUI.
-        /// </summary>
-        /// <param name="property"></param>
-        public static void DrawReadOnlyProperty(SerializedProperty property)
-        {
-            bool guiStatus = GUI.enabled;
-            GUI.enabled = false;
-            EditorGUILayout.PropertyField(property, property.hasChildren);
-            GUI.enabled = guiStatus;
-        }
-     
     }
 }
