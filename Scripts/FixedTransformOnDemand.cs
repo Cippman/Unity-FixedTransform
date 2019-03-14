@@ -13,6 +13,12 @@ namespace CippSharp
 	[ExecuteInEditMode]
 	public class FixedTransformOnDemand : AFixedTransform
 	{
+#if NET_4_6
+		public static readonly string LogName = $"[{typeof(FixedTransformOnDemand).Name}]: ";
+#else
+		public static readonly string LogName = string.Format("[{0}]: ", typeof(FixedTransformOnDemand).Name);
+#endif
+		
 		/// <summary>
 		/// Target, this transform.
 		/// </summary>
