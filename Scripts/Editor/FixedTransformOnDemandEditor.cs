@@ -1,6 +1,7 @@
 ﻿/*
  *  Author: Alessandro Salani (Cippman)
  */
+
 using CippSharp;
 using UnityEditor;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace CippSharpEditor
     [CustomEditor(typeof(FixedTransformOnDemand))]
     public class FixedTransformOnDemandEditor : AFixedTransformEditor
     {
+        protected const string commandsHeader = "Commands:";
+        protected const string setupButtonName = "Setup";
+        
         public override void OnInspectorGUI()
         {
             DrawAFixedTransformData();
@@ -19,11 +23,11 @@ namespace CippSharpEditor
 
         protected void DrawFixedTransformOnDemandInspector()
         {
-            EditorGUILayoutUtilities.DrawHeader("Commands:");
+            EditorGUILayoutUtils.DrawHeader(commandsHeader);
             
-            if (aFixedTransform is FixedTransformOnDemand)
+            if (fixedTransform is FixedTransformOnDemand)
             {
-                EditorGUILayoutUtilities.DrawMiniButton("Setup", SetupCallback);
+                EditorGUILayoutUtils.DrawMiniButton(setupButtonName, SetupCallback);
             }
             
             GUILayout.Space(5);
@@ -31,7 +35,7 @@ namespace CippSharpEditor
 
         private void SetupCallback()
         {
-            ((FixedTransformOnDemand)aFixedTransform).Setup(true);
+            ((FixedTransformOnDemand)fixedTransform).Setup();
         }
     }
 }

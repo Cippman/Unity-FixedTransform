@@ -41,8 +41,7 @@ namespace CippSharp
 		/// Call this after editing target's localPosition, and all children directly under target (as parent)
 		/// will be repositioned by keeping target's localPosition to Vector3.zero and by moving children by offset.
 		/// </summary>
-		/// <param name="affectNestedFixedTransformOnDemandComponents">Tells to affect children component of FixedTransformOnDemand</param>
-		public void Setup(bool affectNestedFixedTransformOnDemandComponents = true)
+		public void Setup()
 		{
 			currentLocalPosition = target.localPosition;
 			bool positionIsDirty = currentLocalPosition != Vector3.zero;
@@ -77,14 +76,11 @@ namespace CippSharp
 					{
 						child.localScale += deltaLocalScale;
 					}
-
-					if (affectNestedFixedTransformOnDemandComponents)
+					
+					FixedTransformOnDemand fixedTransformOnDemand = child.GetComponent<FixedTransformOnDemand>();
+					if (fixedTransformOnDemand != null)
 					{
-						FixedTransformOnDemand fixedTransformOnDemand = child.GetComponent<FixedTransformOnDemand>();
-						if (fixedTransformOnDemand != null)
-						{
-							fixedTransformOnDemand.Setup(affectNestedFixedTransformOnDemandComponents);
-						}
+						fixedTransformOnDemand.Setup();
 					}
 #if UNITY_EDITOR
 					EditorUtility.SetDirty(child);
@@ -96,25 +92,22 @@ namespace CippSharp
 			}
 			else
 			{
-				if (affectNestedFixedTransformOnDemandComponents)
+				for (int i = 0; i < target.childCount; i++)
 				{
-					for (int i = 0; i < target.childCount; i++)
-					{
-						Transform child = target.GetChild(i);
+					Transform child = target.GetChild(i);
 
-						FixedTransformOnDemand fixedTransformOnDemand = child.GetComponent<FixedTransformOnDemand>();
-						if (fixedTransformOnDemand != null)
-						{
-							fixedTransformOnDemand.Setup(affectNestedFixedTransformOnDemandComponents);
-						}
-#if UNITY_EDITOR
-						EditorUtility.SetDirty(child);
-#endif
+					FixedTransformOnDemand fixedTransformOnDemand = child.GetComponent<FixedTransformOnDemand>();
+					if (fixedTransformOnDemand != null)
+					{
+						fixedTransformOnDemand.Setup();
 					}
 #if UNITY_EDITOR
-					EditorRepaint = true;
+					EditorUtility.SetDirty(child);
 #endif
 				}
+#if UNITY_EDITOR
+				EditorRepaint = true;
+#endif
 			}
 		}
 	}

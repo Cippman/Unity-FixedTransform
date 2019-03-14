@@ -8,8 +8,26 @@ using System.Reflection;
 
 namespace CippSharpEditor
 {
-    public static class EditorGUILayoutUtilities
+    public static class EditorGUILayoutUtils
     {
+        /// <summary>
+        /// Call this only in custom editor enable! It retrieves the m_LocalIdentfierInFile of a Object.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static int GetLocalIdentfierInFile(Object target)
+        {
+            PropertyInfo inspectorModeInfo = typeof(UnityEditor.SerializedObject).GetProperty ("inspectorMode", BindingFlags.NonPublic | BindingFlags.Instance);
+         
+            UnityEditor.SerializedObject serializedObject = new UnityEditor.SerializedObject (target); 
+            
+            inspectorModeInfo.SetValue (serializedObject, UnityEditor.InspectorMode.Debug, null);
+
+            UnityEditor.SerializedProperty localIdProp = serializedObject.FindProperty("m_LocalIdentfierInFile");  
+           
+            return localIdProp.intValue;
+        }
+        
         /// <summary>
         /// It help to draw easily infos of a class in custom editors.
         /// </summary>
@@ -33,24 +51,6 @@ namespace CippSharpEditor
             
             GUI.enabled = guiStatus;
             EditorGUILayout.EndVertical();
-        }
-        
-        /// <summary>
-        /// Call this only in custom editor enable! It retrieves the m_LocalIdentfierInFile of a Object.
-        /// </summary>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        public static int GetLocalIdentfierInFile(Object target)
-        {
-            PropertyInfo inspectorModeInfo = typeof(UnityEditor.SerializedObject).GetProperty ("inspectorMode", BindingFlags.NonPublic | BindingFlags.Instance);
-         
-            UnityEditor.SerializedObject serializedObject = new UnityEditor.SerializedObject (target); 
-            
-            inspectorModeInfo.SetValue (serializedObject, UnityEditor.InspectorMode.Debug, null);
-
-            UnityEditor.SerializedProperty localIdProp = serializedObject.FindProperty("m_LocalIdentfierInFile");  
-           
-            return localIdProp.intValue;
         }
         
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿/*
  *  Author: Alessandro Salani (Cippman)
  */
+
 using UnityEditor;
 using UnityEngine;
 using CippSharp;
@@ -10,18 +11,24 @@ namespace CippSharpEditor
     [CustomEditor(typeof(AFixedTransform), true)]
     public class AFixedTransformEditor : Editor
     {
+        protected const string infosHeader = "Infos:";
+        
         protected int localIdentfierInFile;
-        protected AFixedTransform aFixedTransform;
+        protected AFixedTransform fixedTransform;
         protected Transform transform;
         
         private SerializedProperty ser_showableChildren;
         
-        protected virtual void OnEnable()
+        protected void OnEnable()
         {
-            aFixedTransform = ((AFixedTransform) target);
-            localIdentfierInFile = EditorGUILayoutUtilities.GetLocalIdentfierInFile(aFixedTransform);
-            transform = aFixedTransform.transform;
+            fixedTransform = ((AFixedTransform) target);
+            localIdentfierInFile = EditorGUILayoutUtils.GetLocalIdentfierInFile(fixedTransform);
+            transform = fixedTransform.transform;
+            #if NET_4_6
+            ser_showableChildren = serializedObject.FindProperty(nameof(AFixedTransform.children));
+            #else 
             ser_showableChildren = serializedObject.FindProperty("children");
+            #endif
         }
 
         public override void OnInspectorGUI()
@@ -32,36 +39,37 @@ namespace CippSharpEditor
 
         protected void DrawAFixedTransformData()
         {
-            EditorGUILayoutUtilities.DrawObjectData(serializedObject, localIdentfierInFile);
+            EditorGUILayoutUtils.DrawObjectData(serializedObject, localIdentfierInFile);
         }
 
         protected void DrawAFixedTransformInspector()
         {
             serializedObject.Update();
-            EditorGUILayoutUtilities.DrawHeader("Infos:");
-            bool guiEnabled = GUI.enabled;
+            
+            EditorGUILayoutUtils.DrawHeader(infosHeader);
+            bool guiStatus = GUI.enabled;
             GUI.enabled = false;
             
-            if (aFixedTransform.EditorRepaint)
+            if (fixedTransform.EditorRepaint)
             {
-                aFixedTransform.EditorRepaint = false;
+                fixedTransform.EditorRepaint = false;
+                
                 int childCount = transform.childCount;
-                if (aFixedTransform.children.Length != childCount)
+                if (fixedTransform.children.Length != childCount)
                 {
-                    aFixedTransform.children = new AFixedTransform.ShowableTransform[childCount];
+                    fixedTransform.children = new AFixedTransform.ShowableTransform[childCount];
                 }
 
                 for (int i = 0; i < childCount; i++)
                 {
                     Transform child = transform.GetChild(i);
-                    aFixedTransform.children[i] = new AFixedTransform.ShowableTransform(child);
+                    fixedTransform.children[i] = new AFixedTransform.ShowableTransform(child);
                 }
             }
             
             EditorGUILayout.PropertyField(ser_showableChildren, true);
-
-            GUI.enabled = guiEnabled;
-
+            GUI.enabled = guiStatus;
+            
             serializedObject.ApplyModifiedProperties();
         }
     }
